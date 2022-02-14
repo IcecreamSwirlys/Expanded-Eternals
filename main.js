@@ -255,7 +255,6 @@ async function calculateLevel(puuid) {
 
 //Rewards
 async function updateRole() {
-  //var roleManager = new Discord.GuildMemberRoleManager()
   var low_score = 99999;
   var score_user;
   for (const acc in accounts) {
@@ -297,16 +296,14 @@ client.on("messageCreate", async message => {
   var command = args.shift().toLowerCase();
 
   if (command == "help") {
-    message.reply(`**$help:** Brings you to this page. Hello!\n\
+    message.reply("**$help:** Brings you to this page. Hello!\n\
 **$link *[Summoner Name]*:** Links your league account to your discord account in the bot's database.\n\
 **$remove:** Removes you from the scoreboard. *THIS WILL PERMENANTLY REMOVE YOUR CURRENT ETERNALS DATA!!!*\n\
 **$eternals *[optional: eternal name]*:** Returns a list of eternals and their description, or a specific eternal.\n\
 **$set *[eternal name]*:** Begin actively earning points towards the selected eternal.\n\
 **$unset *[eternal name]*:** Stop actively earning points towards the selected eternal.\n\
 **$active:** See what eternals you're actively tracking.\n\
-`//**$myeternals or $list** List your personal eternal stats, active or not.\n\
-`**$update or $u:** Updates active eternals from the last 20 games and lists eternals.
-`);
+**$update or $u:** Updates active eternals from the last 20 games and lists eternals.");
   } else if (command == "link") {
     if (dataJSON.accounts[message.author] != undefined) {
       message.reply("You're already linked, delete your current link before you relink");
@@ -349,7 +346,6 @@ client.on("messageCreate", async message => {
 
     dataJSON.accounts[message.author] = {};
     setupAccount(message.author);
-    //calculateEternals();
 
     const linkMessage = await new Discord.MessageEmbed()
       .setColor('#0099ff')
@@ -453,50 +449,28 @@ client.on("messageCreate", async message => {
     message.reply(`You are no longer tracking ${args.join(' ')}`);
     return;
   } else if (command == "active") {
-  //test
-  if (dataJSON.accounts[message.author] == undefined) {
-    message.reply("You're not currently linked, type $help for a list of commands!");
-    return;
-  }
+    //test
+    if (dataJSON.accounts[message.author] == undefined) {
+      message.reply("You're not currently linked, type $help for a list of commands!");
+      return;
+    }
 
-  if (!Object.keys(dataJSON.accounts[message.author].activeEternals).length) {
-    message.reply("You are not currently tracking any eternals, use *$myeternals add [eternal name]* to begin tracking");
+    if (!Object.keys(dataJSON.accounts[message.author].activeEternals).length) {
+      message.reply("You are not currently tracking any eternals, use *$myeternals add [eternal name]* to begin tracking");
+      return;
+    }
+    let list = [];
+    for (let active of dataJSON.accounts[message.author].activeEternals) {
+      list.push(active);
+    }
+    message.reply("*Currently Tracking:*\n" + list.join('\n'));
     return;
-  }
-  let list = [];
-  for (let active of dataJSON.accounts[message.author].activeEternals) {
-    list.push(active);
-  }
-  message.reply("*Currently Tracking:*\n" + list.join('\n'));
-  return;
-//  } else if (command == "myeternals" || command == "list") {
-    // //test
-    // if (dataJSON.accounts[message.author] == undefined) {
-    //   message.reply("You're not currently linked, type $help for a list of commands!");
-    //   return;
-    // }
-    // //listing - return if nothing to list
-    // //if (!Object.keys(dataJSON.accounts[message.author].eternals).length) {
-    // if (dataJSON.accounts[message.author].eternals.length == 0) {
-    //   message.reply("You do not currently have any eternals, use *$set [eternal name]* to begin tracking");
-    //   return;
-    // }
-    // if (args.length == 0) {
-    //   let list = [];
-    //   for (let eternal of dataJSON.accounts[message.author].eternals) {
-    //     //list.push(`**${eternal.name}:** Score: ${eternal.score}, Level: ${eternal.level}`);
-    //     list.push(`**${eternal.name}:** Score: ${eternal.score}`);
-    //   }
-    //   message.reply("**Your Eternals:**\n" + list.join('\n'));
-    // }
   } else if (command == "update" || command == "u") {
     //test
     if (dataJSON.accounts[message.author] == undefined) {
       message.reply("You're not currently linked, type $help for a list of commands!");
       return;
     }
-    //listing - return if nothing to list
-    //if (!Object.keys(dataJSON.accounts[message.author].eternals).length) {
     if (dataJSON.accounts[message.author].eternals.length == 0) {
       message.reply("You do not currently have any eternals, use *$set [eternal name]* to begin tracking");
       return;
@@ -506,7 +480,6 @@ client.on("messageCreate", async message => {
 
     let list = [];
     for (let eternal of dataJSON.accounts[message.author].eternals) {
-      //list.push(`**${eternal.name}:** Score: ${eternal.score}, Level: ${eternal.level}`);
       list.push(`**${eternal.name}:** Score: ${eternal.score}`);
     }
     message.reply("**Your Eternals:**\n" + list.join('\n'));
