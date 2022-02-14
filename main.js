@@ -203,10 +203,10 @@ function eternalsMath(stat, key, win) {
       return 1;
     }
     return 0;
-  } else if (eternals[key][2] == "win") {
-    console.log("win", key, stat, win);
+  } else if (eternals[key][2] == "wins") {
+    console.log("wins", key, stat, win);
     if (win) {
-      return stat;
+      return 1;
     }
     return 0;
   }
