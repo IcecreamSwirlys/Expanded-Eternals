@@ -21,12 +21,11 @@ pullJSON();
 //add - add the value to the existing score without modifying it
 //wins - add but only if game ended in win
 //per # - add 1 if the value >= #
-//spine of steel
 const eternals = {
   "Lol Bye.": ["c.blastConeOppositeOpponentCount", "Times hit opponent with blast cone", "add"],
   "yoink": ["c.buffsStolen", "Buffs stolen", "add"],
   "Shelly Travolta": ["c.dancedWithRiftHerald", "Ended game with rift herald", "add"],
-  "witty3": ["c.elderDragonKillsWithOpposingSoul", "Elder dragons taken when opposing team has soul", "add"],
+  "Discount Collector": ["c.elderDragonKillsWithOpposingSoul", "Elder dragons taken when opposing team has soul", "add"],
   "Jungle Nirvana": ["c.epicMonsterKillsNearEnemyJungler", "Epic monster kills near enemy jungler", "add"],
   "Three Parallel Universes Ahead": ["c.epicMonsterKillsWithin30SecondsOfSpawn", "Epic monster kills within 30 seconds of spawn", "add"],
   "YOINK!": ["c.epicMonsterSteals", "Epic monster steals", "add"],
@@ -40,18 +39,17 @@ const eternals = {
   "Unstoppable Force": ["c.outnumberedNexusKill", "Nexus kills with more nearby enemies than allies", "add"],
   "Flame me, I dare you": ["c.perfectDragonSoulsTaken", "Perfect dragon souls taken", "add"],
   "Easy mode": ["c.perfectGame", "Zero death games", "add"],
-  "witty17": ["c.soloBaronKills", "Solo baron kills", "add"],
+  "Trust me, I got this": ["c.soloBaronKills", "Solo baron kills", "add"],
   "Not even close": ["c.survivedSingleDigitHpCount", "Survived with single digit health points", "add"],
   "Alcove Gaming": ["c.takedownsInAlcove", "Takedowns in alcove", "add"],
   "Dangerous game": ["c.takedownsInEnemyFountain", "Takedowns in enemy fountain", "add"],
-  "witty21": ["c.teamElderDragonKills", "Team elder dragon kills", "add"], //remove?
   "Hobbit nuke": ["c.twentyMinionsIn3SecondsCount", "Times killed 20 minions within 3 seconds", "add"],
   "Mission Impossible": ["c.visionScoreAdvantageLaneOpponent", "Times vision score of 15 or more than lane opponent", "per 15"], //bad name
   "YOU SHALL NOT PASS": ["c.wardsGuarded", "Wards guarded", "add"],
   "Blood in the water": ["firstBloodKill", "First bloods", "add"],
   "Early bird": ["gameEndedInEarlySurrender", "Wins by early surrender", "wins"],
   "Royal Flush": ["pentaKills", "Pentakills", "add"],
-  "witty28": ["timeCCingOthers", "Time CCing others", "add"],
+  "You might as well make some tea": ["timeCCingOthers", "Time CCing others", "add"],
   "Colourblind Simulator": ["totalTimeSpentDead", "Total time spent dead", "add"]
 }
 
@@ -487,7 +485,8 @@ client.on("messageCreate", async message => {
   if (args.length == 0) {
     let list = [];
     for (let eternal of dataJSON.accounts[message.author].eternals) {
-      list.push(`**${eternal.name}:** Score: ${eternal.score}, Level: ${eternal.level}`);
+      //list.push(`**${eternal.name}:** Score: ${eternal.score}, Level: ${eternal.level}`);
+      list.push(`**${eternal.name}:** Score: ${eternal.score}`);
     }
     message.reply("**Your Eternals:**\n" + list.join('\n'));
   }
